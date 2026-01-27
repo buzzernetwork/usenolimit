@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 10 Revenue Ad Formats - TechPulse</title>
+  <script async src="https://buzzer-networkbackend-production.up.railway.app/ads/loader.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: rgba(255,255,255,0.05);
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 24px; font-weight: 700; color: #4F46E5; text-decoration: none; }
+    nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      margin-left: 24px;
+    }
+    nav a:hover { color: #fff; }
+
+    h1 {
+      font-size: 36px;
+      margin: 40px 0 16px;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+    }
+
+    .format-section {
+      margin-bottom: 60px;
+      padding: 30px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .format-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .format-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .format-cpm {
+      background: #22c55e;
+      color: #000;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .format-info {
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .ad-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 20px;
+      min-height: 100px;
+    }
+    .ad-container.billboard { min-height: 290px; }
+    .ad-container.half-page { min-height: 640px; }
+    .ad-container.skyscraper { min-height: 640px; }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 30px;
+    }
+    .content-placeholder {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .content-placeholder h3 { margin-bottom: 10px; }
+    .content-placeholder p { color: rgba(255,255,255,0.6); }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.5);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">TechPulse</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/top-formats.html">Ad Formats</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Top 10 Revenue Ad Formats</h1>
+    <p class="subtitle">Testing high-CPM display ad placements</p>
+
+    <!-- 1. Billboard 970x250 - $5-10 CPM -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">1. Billboard (970×250)</span>
+        <span class="format-cpm">$5-10 CPM</span>
+      </div>
+      <p class="format-info">Zone 4 • Premium above-the-fold placement • High viewability</p>
+      <div class="ad-container billboard">
+        <div data-buzzer-zone="4" data-width="970" data-height="250"></div>
+      </div>
+    </section>
+
+    <!-- 2. Leaderboard 728x90 - $3-8 CPM -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">2. Leaderboard (728×90)</span>
+        <span class="format-cpm">$3-8 CPM</span>
+      </div>
+      <p class="format-info">Zone 1 • Classic header placement • High fill rate</p>
+      <div class="ad-container">
+        <div data-buzzer-zone="1" data-width="728" data-height="90"></div>
+      </div>
+    </section>
+
+    <!-- 3. Half Page 300x600 with content -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">3. Half Page (300×600)</span>
+        <span class="format-cpm">$4-8 CPM</span>
+      </div>
+      <p class="format-info">Zone 5 • Sidebar dominance • Excellent for branding</p>
+      <div class="two-column">
+        <div class="content-placeholder">
+          <h3>Article Content Area</h3>
+          <p>The half-page ad format (300×600) is one of the highest-performing display formats. It dominates the sidebar and provides excellent branding opportunities.</p>
+          <br>
+          <p>Publishers typically see 2-3x higher CPMs compared to standard 300×250 units due to the larger canvas and higher viewability rates.</p>
+          <br>
+          <p>This format is particularly effective for automotive, luxury, and financial services advertisers who need space to tell their brand story.</p>
+        </div>
+        <div class="ad-container half-page">
+          <div data-buzzer-zone="5" data-width="300" data-height="600"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Medium Rectangle 300x250 - $2-6 CPM -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">4. Medium Rectangle (300×250)</span>
+        <span class="format-cpm">$2-6 CPM</span>
+      </div>
+      <p class="format-info">Zone 2 • Universal format • Best fill rates</p>
+      <div class="ad-container">
+        <div data-buzzer-zone="2" data-width="300" data-height="250"></div>
+      </div>
+    </section>
+
+    <!-- 5. Large Rectangle 336x280 -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">5. Large Rectangle (336×280)</span>
+        <span class="format-cpm">$3-7 CPM</span>
+      </div>
+      <p class="format-info">Zone 6 • Google preferred • Higher engagement</p>
+      <div class="ad-container">
+        <div data-buzzer-zone="6" data-width="336" data-height="280"></div>
+      </div>
+    </section>
+
+    <!-- 6. Skyscraper 160x600 -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">6. Skyscraper (160×600)</span>
+        <span class="format-cpm">$3-6 CPM</span>
+      </div>
+      <p class="format-info">Zone 7 • Persistent visibility • Narrow sidebar fit</p>
+      <div class="two-column" style="grid-template-columns: 1fr 180px;">
+        <div class="content-placeholder">
+          <h3>Content with Skyscraper</h3>
+          <p>The skyscraper format works well in narrow sidebars where a 300-wide unit won't fit. While it has a smaller canvas, the tall format provides excellent scroll-with-content opportunities.</p>
+        </div>
+        <div class="ad-container skyscraper">
+          <div data-buzzer-zone="7" data-width="160" data-height="600"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Mobile Banner 320x50 -->
+    <section class="format-section">
+      <div class="format-header">
+        <span class="format-title">7. Mobile Banner (320×50)</span>
+        <span class="format-cpm">$1-4 CPM</span>
+      </div>
+      <p class="format-info">Zone 3 • Mobile-first • Sticky footer potential</p>
+      <div class="ad-container">
+        <div data-buzzer-zone="3" data-width="320" data-height="50"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Buzzer Network • Testing Top Revenue Ad Formats</p>
+    <p style="margin-top: 10px; font-size: 12px;">
+      Zone 1: 728x90 • Zone 2: 300x250 • Zone 3: 320x50 • Zone 4: 970x250 • Zone 5: 300x600 • Zone 6: 336x280 • Zone 7: 160x600
+    </p>
+  </footer>
+
+</body>
+</html>
