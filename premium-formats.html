@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Ad Formats - Video, Interstitial, Rewarded</title>
+  <script async src="https://buzzer-networkbackend-production.up.railway.app/ads/loader.js"></script>
+  <script src="/js/buzzer-video.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    h1 {
+      font-size: 42px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      color: rgba(255,255,255,0.6);
+      font-size: 18px;
+    }
+
+    .format-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+    .format-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .format-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .format-subtitle {
+      color: rgba(255,255,255,0.6);
+    }
+    .cpm-badge {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .cpm-badge.premium {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+    .cpm-badge.ultra {
+      background: linear-gradient(135deg, #ec4899, #be185d);
+    }
+
+    .demo-area {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+    }
+    .demo-button {
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      color: #fff;
+      border: none;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .demo-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(79, 70, 229, 0.4);
+    }
+    .demo-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .video-container {
+      margin: 20px auto;
+      max-width: 640px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .stat {
+      text-align: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #22c55e;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    .reward-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .info-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+    .info-list li {
+      padding: 8px 0;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .info-list li::before {
+      content: '✓';
+      color: #22c55e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Premium Ad Formats</h1>
+      <p class="subtitle">High-CPM video, interstitial, and rewarded ad units</p>
+    </header>
+
+    <!-- 1. Video Pre-roll -->
+    <section class="format-card">
+      <div class="format-header">
+        <div>
+          <h2 class="format-title">🎬 Video Pre-roll</h2>
+          <p class="format-subtitle">Plays before content • 15-30 seconds</p>
+        </div>
+        <span class="cpm-badge ultra">$15-35 CPM</span>
+      </div>
+      <div class="demo-area">
+        <div id="preroll-container" class="video-container"></div>
+        <button class="demo-button" onclick="playPreroll()">
+          ▶️ Play Video Ad Demo
+        </button>
+        <p style="margin-top: 16px; color: rgba(255,255,255,0.5); font-size: 14px;">
+          Simulated VAST player • Skippable after 5 seconds
+        </p>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">85%</div>
+          <div class="stat-label">View-Through Rate</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">2.3%</div>
+          <div class="stat-label">Click-Through Rate</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">$25</div>
+          <div class="stat-label">Avg CPM</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Interstitial Display -->
+    <section class="format-card">
+      <div class="format-header">
+        <div>
+          <h2 class="format-title">📱 Interstitial Display</h2>
+          <p class="format-subtitle">Full-screen overlay • Between content transitions</p>
+        </div>
+        <span class="cpm-badge premium">$8-15 CPM</span>
+      </div>
+      <div class="demo-area">
+        <button class="demo-button" onclick="showInterstitial()">
+          🖼️ Show Interstitial Ad
+        </button>
+        <p style="margin-top: 16px; color: rgba(255,255,255,0.5); font-size: 14px;">
+          Close button appears after 5 seconds
+        </p>
+      </div>
+      <ul class="info-list">
+        <li>Full user attention</li>
+        <li>High viewability (100%)</li>
+        <li>Works on page transitions</li>
+        <li>336×280 creative format</li>
+      </ul>
+    </section>
+
+    <!-- 3. Rewarded Video -->
+    <section class="format-card">
+      <div class="format-header">
+        <div>
+          <h2 class="format-title">🎁 Rewarded Video</h2>
+          <p class="format-subtitle">User-initiated • Grants in-app reward</p>
+        </div>
+        <span class="cpm-badge ultra">$10-20 CPM</span>
+      </div>
+      <div class="demo-area">
+        <div class="reward-display">
+          <span>🪙</span>
+          <span>Your coins: <strong id="coin-count">0</strong></span>
+        </div>
+        <br>
+        <button class="demo-button" onclick="showRewardedAd()">
+          🎥 Watch Ad for +100 Coins
+        </button>
+        <p style="margin-top: 16px; color: rgba(255,255,255,0.5); font-size: 14px;">
+          Must watch full video to earn reward
+        </p>
+      </div>
+      <ul class="info-list">
+        <li>User opts-in voluntarily</li>
+        <li>98% completion rate</li>
+        <li>Non-skippable (by design)</li>
+        <li>Highest engagement format</li>
+      </ul>
+    </section>
+
+    <!-- 4. Outstream Video -->
+    <section class="format-card">
+      <div class="format-header">
+        <div>
+          <h2 class="format-title">📰 Outstream Video</h2>
+          <p class="format-subtitle">Auto-plays in content • Expands on view</p>
+        </div>
+        <span class="cpm-badge">$6-12 CPM</span>
+      </div>
+      <div class="demo-area">
+        <div id="outstream-container" style="max-width: 640px; margin: 0 auto; min-height: 100px; background: rgba(0,0,0,0.5); border-radius: 8px;"></div>
+        <button class="demo-button" onclick="initOutstream()" style="margin-top: 20px;">
+          📺 Initialize Outstream Ad
+        </button>
+        <p style="margin-top: 16px; color: rgba(255,255,255,0.5); font-size: 14px;">
+          Plays when scrolled into view • Collapses when done
+        </p>
+      </div>
+    </section>
+
+    <!-- Standard Display Reminder -->
+    <section class="format-card" style="background: rgba(79, 70, 229, 0.1); border-color: rgba(79, 70, 229, 0.3);">
+      <div class="format-header">
+        <div>
+          <h2 class="format-title">📊 Display Formats</h2>
+          <p class="format-subtitle">Standard IAB display ads</p>
+        </div>
+        <span class="cpm-badge">$2-10 CPM</span>
+      </div>
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+        Already configured on this site. See all display formats:
+      </p>
+      <a href="/top-formats.html" class="demo-button" style="display: inline-block; text-decoration: none;">
+        View Display Formats →
+      </a>
+    </section>
+  </div>
+
+  <footer>
+    <p>Buzzer Network • Premium Ad Formats Demo</p>
+  </footer>
+
+  <script>
+    // Demo video URL (Big Buck Bunny - free video)
+    const DEMO_VIDEO_URL = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+
+    // Simulated VAST URL (would normally come from backend)
+    const VAST_URL = 'https://buzzer-networkbackend-production.up.railway.app/api/v1/video/vast/demo';
+
+    // Coin counter
+    let coins = 0;
+
+    function updateCoins(amount) {
+      coins += amount;
+      document.getElementById('coin-count').textContent = coins;
+    }
+
+    // Pre-roll demo
+    function playPreroll() {
+      const container = document.getElementById('preroll-container');
+      container.innerHTML = '';
+
+      // Create a simulated video player
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position:relative;background:#000;border-radius:12px;overflow:hidden;';
+
+      const video = document.createElement('video');
+      video.src = DEMO_VIDEO_URL;
+      video.width = 640;
+      video.height = 360;
+      video.controls = false;
+      video.muted = true;
+      video.style.cssText = 'width:100%;display:block;';
+
+      // Ad label
+      const adLabel = document.createElement('div');
+      adLabel.textContent = 'Ad • 0:00';
+      adLabel.style.cssText = 'position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);color:#fff;padding:4px 12px;font-size:12px;border-radius:4px;';
+
+      // Skip button
+      const skipBtn = document.createElement('button');
+      skipBtn.textContent = 'Skip in 5s';
+      skipBtn.disabled = true;
+      skipBtn.style.cssText = 'position:absolute;bottom:20px;right:20px;background:rgba(0,0,0,0.8);color:#fff;border:1px solid #fff;padding:10px 20px;border-radius:4px;cursor:pointer;opacity:0.5;';
+
+      let skipTime = 5;
+      const skipInterval = setInterval(() => {
+        skipTime--;
+        if (skipTime <= 0) {
+          clearInterval(skipInterval);
+          skipBtn.textContent = 'Skip Ad →';
+          skipBtn.disabled = false;
+          skipBtn.style.opacity = '1';
+        } else {
+          skipBtn.textContent = `Skip in ${skipTime}s`;
+        }
+      }, 1000);
+
+      skipBtn.onclick = () => {
+        clearInterval(skipInterval);
+        video.pause();
+        container.innerHTML = '<p style="padding:40px;color:rgba(255,255,255,0.5);">Ad skipped. Content would play now.</p>';
+      };
+
+      // Time update
+      video.ontimeupdate = () => {
+        const time = Math.floor(video.currentTime);
+        const mins = Math.floor(time / 60);
+        const secs = time % 60;
+        adLabel.textContent = `Ad • ${mins}:${secs.toString().padStart(2, '0')}`;
+      };
+
+      video.onended = () => {
+        container.innerHTML = '<p style="padding:40px;color:#22c55e;">✓ Ad completed! Content would play now.</p>';
+      };
+
+      wrapper.appendChild(video);
+      wrapper.appendChild(adLabel);
+      wrapper.appendChild(skipBtn);
+      container.appendChild(wrapper);
+
+      video.play();
+    }
+
+    // Interstitial demo
+    function showInterstitial() {
+      const interstitial = new BuzzerAds.Interstitial({
+        zoneId: 6, // Large Rectangle zone
+        closeAfter: 5,
+        onClose: () => console.log('Interstitial closed')
+      });
+      interstitial.show();
+    }
+
+    // Rewarded video demo
+    function showRewardedAd() {
+      // For demo, we'll simulate with a simple video
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.95);
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      `;
+
+      const rewardPreview = document.createElement('div');
+      rewardPreview.innerHTML = `
+        <div style="text-align:center;color:#fff;margin-bottom:20px;">
+          <div style="font-size:24px;margin-bottom:8px;">🎁 Watch to earn</div>
+          <div style="font-size:36px;font-weight:bold;color:#22c55e;">+100 coins</div>
+        </div>
+      `;
+
+      const videoWrapper = document.createElement('div');
+      videoWrapper.style.cssText = 'background:#000;border-radius:12px;overflow:hidden;position:relative;';
+
+      const video = document.createElement('video');
+      video.src = DEMO_VIDEO_URL;
+      video.width = 640;
+      video.height = 360;
+      video.muted = false;
+      video.style.display = 'block';
+
+      const progressBar = document.createElement('div');
+      progressBar.style.cssText = 'height:4px;background:#333;position:absolute;bottom:0;left:0;right:0;';
+      const progressFill = document.createElement('div');
+      progressFill.style.cssText = 'height:100%;background:#22c55e;width:0%;transition:width 0.1s;';
+      progressBar.appendChild(progressFill);
+
+      video.ontimeupdate = () => {
+        const percent = (video.currentTime / video.duration) * 100;
+        progressFill.style.width = percent + '%';
+      };
+
+      video.onended = () => {
+        overlay.remove();
+        updateCoins(100);
+
+        // Show reward notification
+        const notif = document.createElement('div');
+        notif.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #22c55e, #16a34a);
+          color: #fff;
+          padding: 40px 60px;
+          border-radius: 20px;
+          font-size: 28px;
+          font-weight: bold;
+          z-index: 1000000;
+        `;
+        notif.textContent = '🎉 +100 coins earned!';
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 2500);
+      };
+
+      videoWrapper.appendChild(video);
+      videoWrapper.appendChild(progressBar);
+
+      overlay.appendChild(rewardPreview);
+      overlay.appendChild(videoWrapper);
+      document.body.appendChild(overlay);
+
+      video.play();
+    }
+
+    // Outstream demo
+    function initOutstream() {
+      const container = document.getElementById('outstream-container');
+      container.innerHTML = '';
+      container.style.minHeight = '360px';
+
+      const video = document.createElement('video');
+      video.src = DEMO_VIDEO_URL;
+      video.muted = true;
+      video.style.cssText = 'width:100%;border-radius:8px;';
+      video.controls = false;
+
+      const label = document.createElement('div');
+      label.textContent = 'Outstream Ad';
+      label.style.cssText = 'position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);color:#fff;padding:4px 8px;font-size:12px;border-radius:4px;';
+
+      container.style.position = 'relative';
+      container.appendChild(video);
+      container.appendChild(label);
+
+      video.onended = () => {
+        container.style.height = container.offsetHeight + 'px';
+        setTimeout(() => {
+          container.style.transition = 'height 0.3s';
+          container.style.height = '0';
+          container.style.overflow = 'hidden';
+        }, 100);
+      };
+
+      video.play();
+    }
+  </script>
+
+</body>
+</html>
