@@ -17,6 +17,22 @@
     }
     .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
 
+    .site-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 40px;
+    }
+    .logo { font-size: 24px; font-weight: 700; color: #4F46E5; text-decoration: none; }
+    .site-nav nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      margin-left: 24px;
+    }
+    .site-nav nav a:hover { color: #fff; }
+
     header {
       text-align: center;
       margin-bottom: 60px;
@@ -159,6 +175,16 @@
   </style>
 </head>
 <body>
+
+  <div class="site-nav">
+    <a href="/" class="logo">TechPulse</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/top-formats.html">Display</a>
+      <a href="/premium-formats.html">Video</a>
+      <a href="/advanced-formats.html">AI & Native</a>
+    </nav>
+  </div>
 
   <div class="container">
     <header>

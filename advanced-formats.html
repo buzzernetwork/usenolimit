@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="technology, AI, gadgets, reviews, innovation, software">
+  <title>Advanced Ad Formats - Responsive, Native & AI-Powered</title>
+  <script async src="https://buzzer-networkbackend-production.up.railway.app/ads/loader.js"></script>
+  <script src="js/buzzer-advanced.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: rgba(255,255,255,0.05);
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 24px; font-weight: 700; color: #4F46E5; text-decoration: none; }
+    nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      margin-left: 24px;
+    }
+    nav a:hover { color: #fff; }
+
+    h1 { font-size: 36px; margin: 40px 0 16px; text-align: center; }
+    .subtitle { text-align: center; color: rgba(255,255,255,0.6); margin-bottom: 40px; }
+
+    .feature-section {
+      margin-bottom: 60px;
+      padding: 30px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .feature-title { font-size: 24px; font-weight: 600; }
+    .feature-desc { color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+    .feature-badge {
+      display: inline-block;
+      background: #22c55e;
+      color: #000;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .demo-item {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .demo-label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.8);
+    }
+    .demo-code {
+      background: rgba(0,0,0,0.5);
+      padding: 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #22c55e;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+
+    .responsive-demo {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .responsive-demo h4 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .width-slider {
+      width: 100%;
+      margin: 16px 0;
+    }
+    .width-display {
+      font-family: monospace;
+      color: #4F46E5;
+    }
+
+    .resize-container {
+      resize: horizontal;
+      overflow: hidden;
+      min-width: 320px;
+      max-width: 100%;
+      border: 2px dashed rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(0,0,0,0.2);
+    }
+
+    .native-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .ai-debug {
+      background: rgba(79, 70, 229, 0.1);
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .ai-debug h4 {
+      color: #4F46E5;
+      margin-bottom: 12px;
+    }
+    .ai-debug pre {
+      font-family: monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      white-space: pre-wrap;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .comparison-table th {
+      background: rgba(255,255,255,0.05);
+      font-weight: 600;
+    }
+    .check { color: #22c55e; }
+    .x { color: #ef4444; }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .demo-grid, .native-grid { grid-template-columns: 1fr; }
+      .resize-container { min-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">TechPulse</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/top-formats.html">Display</a>
+        <a href="/premium-formats.html">Video</a>
+        <a href="/advanced-formats.html">Advanced</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Next-Gen Ad Formats</h1>
+    <p class="subtitle">Responsive sizing, native templates, and AI-powered optimization</p>
+
+    <!-- ============================================================ -->
+    <!-- 1. RESPONSIVE ADS -->
+    <!-- ============================================================ -->
+    <section class="feature-section">
+      <div class="feature-header">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+          <span>📐</span>
+        </div>
+        <div>
+          <h2 class="feature-title">
+            Responsive/Fluid Ads
+            <span class="feature-badge">NEW</span>
+          </h2>
+        </div>
+      </div>
+      <p class="feature-desc">
+        Ads that automatically adapt to container width while maintaining IAB-compliant aspect ratios.
+        No more fixed pixel sizes - ads resize fluidly with the layout.
+      </p>
+
+      <!-- Interactive Demo -->
+      <div class="responsive-demo">
+        <h4>Drag the corner to resize the container</h4>
+        <div class="resize-container" style="width: 600px;" id="responsive-demo-container">
+          <div data-buzzer-responsive="leaderboard" data-show-size></div>
+        </div>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-item">
+          <div class="demo-label">Rectangle (Fluid)</div>
+          <div data-buzzer-responsive="rectangle" data-show-size></div>
+          <div class="demo-code">&lt;div data-buzzer-responsive="rectangle"&gt;&lt;/div&gt;</div>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-label">Half Page (Fluid)</div>
+          <div data-buzzer-responsive="halfPage" data-show-size style="max-height: 400px; overflow: hidden;"></div>
+          <div class="demo-code">&lt;div data-buzzer-responsive="halfPage"&gt;&lt;/div&gt;</div>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-label">Mobile Banner (Fluid)</div>
+          <div data-buzzer-responsive="mobileBanner" data-show-size></div>
+          <div class="demo-code">&lt;div data-buzzer-responsive="mobileBanner"&gt;&lt;/div&gt;</div>
+        </div>
+      </div>
+
+      <div class="demo-code" style="margin-top: 24px;">
+// Available formats: leaderboard, billboard, rectangle, largeRectangle, skyscraper, halfPage, mobileBanner, mobileInterstitial
+
+// Programmatic usage:
+const ad = new BuzzerAds.ResponsiveAd('#my-container', {
+  format: 'leaderboard',
+  onResize: (size) => console.log('Resized to', size)
+});
+ad.init();
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 2. NATIVE ADS -->
+    <!-- ============================================================ -->
+    <section class="feature-section">
+      <div class="feature-header">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #22c55e, #14b8a6);">
+          <span>🎨</span>
+        </div>
+        <div>
+          <h2 class="feature-title">
+            Native Ad Templates
+            <span class="feature-badge">4 STYLES</span>
+          </h2>
+        </div>
+      </div>
+      <p class="feature-desc">
+        Ads that seamlessly blend with your site's design. Choose from 4 templates and customize colors,
+        typography, and spacing to match your brand.
+      </p>
+
+      <div class="native-grid">
+        <div class="demo-item">
+          <div class="demo-label">In-Feed (Article Style)</div>
+          <div data-buzzer-native="in-feed" data-dark-mode></div>
+          <div class="demo-code">&lt;div data-buzzer-native="in-feed"&gt;&lt;/div&gt;</div>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-label">Content Recommendation</div>
+          <div data-buzzer-native="recommendation" data-dark-mode></div>
+          <div class="demo-code">&lt;div data-buzzer-native="recommendation"&gt;&lt;/div&gt;</div>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-label">Sidebar Widget</div>
+          <div data-buzzer-native="sidebar" data-dark-mode></div>
+          <div class="demo-code">&lt;div data-buzzer-native="sidebar"&gt;&lt;/div&gt;</div>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-label">Text Link (Minimal)</div>
+          <div data-buzzer-native="text-link"></div>
+          <div class="demo-code">&lt;div data-buzzer-native="text-link"&gt;&lt;/div&gt;</div>
+        </div>
+      </div>
+
+      <div class="demo-code" style="margin-top: 24px;">
+// Customize native ad styles:
+const nativeAd = new BuzzerAds.NativeAd('#my-container', {
+  template: 'in-feed',
+  styles: {
+    background: '#1a1a2e',
+    titleColor: '#ffffff',
+    descColor: '#a0a0a0',
+    ctaBackground: '#4F46E5',
+    borderRadius: '16px',
+  },
+  onImpression: (ad) => console.log('Viewed:', ad.title),
+  onClick: (ad) => console.log('Clicked:', ad.title),
+});
+nativeAd.load();
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 3. AI-POWERED ASSEMBLY -->
+    <!-- ============================================================ -->
+    <section class="feature-section">
+      <div class="feature-header">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+          <span>🤖</span>
+        </div>
+        <div>
+          <h2 class="feature-title">
+            AI-Powered Ad Assembly
+            <span class="feature-badge">SMART</span>
+          </h2>
+        </div>
+      </div>
+      <p class="feature-desc">
+        Our AI engine analyzes page content, user behavior, and historical performance to select
+        the best ad creative and optimize in real-time using multi-armed bandit algorithms.
+      </p>
+
+      <div class="demo-grid">
+        <div class="demo-item">
+          <div class="demo-label">AI-Optimized Ad (with Debug)</div>
+          <div id="ai-ad-container" data-buzzer-ai="sidebar" data-debug></div>
+        </div>
+
+        <div class="demo-item">
+          <div class="demo-label">What the AI considers:</div>
+          <div class="ai-debug">
+            <h4>Page Context Analysis</h4>
+            <pre id="context-output">Loading...</pre>
+          </div>
+          <div class="ai-debug" style="margin-top: 12px;">
+            <h4>User Signals</h4>
+            <pre id="signals-output">Loading...</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-code" style="margin-top: 24px;">
+// AI Assembly with full control:
+const ai = new BuzzerAds.AIAssembly({
+  enableContextAnalysis: true,  // Analyze page content
+  enablePersonalization: true,  // Use user signals
+  enableABTesting: true,        // Multi-armed bandit optimization
+  debugMode: true,              // Log decisions to console
+});
+
+const result = await ai.assembleAd('#my-container', {
+  template: 'sidebar'
+});
+
+console.log(result.ad);       // Selected ad
+console.log(result.context);  // Page analysis
+console.log(result.signals);  // User signals
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- COMPARISON TABLE -->
+    <!-- ============================================================ -->
+    <section class="feature-section">
+      <div class="feature-header">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #6366f1, #ec4899);">
+          <span>📊</span>
+        </div>
+        <div>
+          <h2 class="feature-title">Industry Comparison</h2>
+        </div>
+      </div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Google AdSense</th>
+            <th>Media.net</th>
+            <th>Buzzer Network</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IAB Standard Sizes</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓ 12 formats</td>
+          </tr>
+          <tr>
+            <td>Responsive/Fluid Sizing</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓ 8 fluid types</td>
+          </tr>
+          <tr>
+            <td>Native Ad Templates</td>
+            <td class="check">✓ Limited</td>
+            <td class="check">✓</td>
+            <td class="check">✓ 4 templates</td>
+          </tr>
+          <tr>
+            <td>Video/VAST Support</td>
+            <td class="check">✓</td>
+            <td class="x">✗</td>
+            <td class="check">✓ VAST 4.2</td>
+          </tr>
+          <tr>
+            <td>Interstitial Ads</td>
+            <td class="check">✓</td>
+            <td class="x">✗</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>Rewarded Video</td>
+            <td class="x">✗</td>
+            <td class="x">✗</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>AI Creative Optimization</td>
+            <td class="check">✓ Black box</td>
+            <td class="x">✗</td>
+            <td class="check">✓ Transparent</td>
+          </tr>
+          <tr>
+            <td>A/B Testing Built-in</td>
+            <td class="x">✗</td>
+            <td class="x">✗</td>
+            <td class="check">✓ Thompson Sampling</td>
+          </tr>
+          <tr>
+            <td>Publisher Revenue Share</td>
+            <td>68%</td>
+            <td>~70%</td>
+            <td class="check">85%</td>
+          </tr>
+          <tr>
+            <td>Payment Speed</td>
+            <td>NET 21</td>
+            <td>NET 30</td>
+            <td class="check">Instant (Blockchain)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Quick Integration -->
+    <section style="margin: 60px 0; padding: 30px; background: rgba(79, 70, 229, 0.1); border-radius: 16px; border: 1px solid rgba(79, 70, 229, 0.3);">
+      <h2 style="margin-bottom: 20px;">Quick Integration</h2>
+      <div class="demo-code">
+&lt;!-- 1. Include the scripts --&gt;
+&lt;script async src="https://buzzer-networkbackend-production.up.railway.app/ads/loader.js"&gt;&lt;/script&gt;
+&lt;script src="https://ad-test-site.vercel.app/js/buzzer-advanced.js"&gt;&lt;/script&gt;
+
+&lt;!-- 2. Add responsive ad --&gt;
+&lt;div data-buzzer-responsive="leaderboard"&gt;&lt;/div&gt;
+
+&lt;!-- 3. Add native ad --&gt;
+&lt;div data-buzzer-native="in-feed"&gt;&lt;/div&gt;
+
+&lt;!-- 4. Add AI-optimized ad --&gt;
+&lt;div data-buzzer-ai="sidebar"&gt;&lt;/div&gt;
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Buzzer Network • Next-Gen Ad Technology</p>
+  </footer>
+
+  <script>
+    // Display AI analysis for demo
+    setTimeout(() => {
+      const ai = new BuzzerAds.AIAssembly({ debugMode: true });
+      const context = ai.analyzePageContext();
+      const signals = ai.gatherUserSignals();
+
+      document.getElementById('context-output').textContent = JSON.stringify({
+        category: context.category,
+        keywords: context.keywords.slice(0, 8),
+        readingTime: context.readingTime + ' min',
+      }, null, 2);
+
+      document.getElementById('signals-output').textContent = JSON.stringify({
+        device: signals.device,
+        timeOfDay: signals.timeOfDay,
+        isReturningUser: signals.isReturningUser,
+        language: signals.language,
+      }, null, 2);
+    }, 500);
+  </script>
+</body>
+</html>
