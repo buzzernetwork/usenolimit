@@ -351,6 +351,122 @@
       color: rgba(255,255,255,0.6);
     }
 
+    /* Size Tracker */
+    .size-tracker {
+      margin-top: 30px;
+      padding: 24px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .size-item {
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 13px;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .size-item.uploaded {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    .size-item.pending {
+      background: rgba(79, 70, 229, 0.2);
+      border-color: rgba(79, 70, 229, 0.5);
+    }
+    .size-item .size-dim {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .size-item .size-name {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+    }
+    .size-item .size-status {
+      font-size: 10px;
+      margin-top: 6px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .size-item.uploaded .size-status {
+      background: #22c55e;
+      color: #000;
+    }
+    .size-item.pending .size-status {
+      background: rgba(79, 70, 229, 0.5);
+      color: #fff;
+    }
+    .size-item img {
+      width: 100%;
+      max-height: 60px;
+      object-fit: contain;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .continue-btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .uploaded-list {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+    }
+    .uploaded-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .uploaded-item:last-child { border-bottom: none; }
+    .uploaded-item img {
+      width: 60px;
+      height: 40px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 4px;
+    }
+    .uploaded-item .info {
+      flex: 1;
+    }
+    .uploaded-item .filename {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .uploaded-item .dimensions {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+    }
+    .uploaded-item .match {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #22c55e;
+      color: #000;
+    }
+    .uploaded-item .no-match {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #f59e0b;
+      color: #000;
+    }
+
     @media (max-width: 900px) {
       .analysis-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
@@ -374,27 +490,27 @@
 
   <section class="hero">
     <h1>AI Creative Studio</h1>
-    <p>Upload any ad creative. Our AI extracts colors, text, and branding to regenerate perfectly-sized ads for all 11 IAB formats.</p>
+    <p>Upload the ad sizes you have. AI fills in the missing sizes automatically, matching your brand colors and style.</p>
 
     <div class="steps">
       <div class="step">
         <div class="step-number">1</div>
-        <span class="step-text">Upload Any Size</span>
+        <span class="step-text">Upload What You Have</span>
       </div>
       <span class="step-arrow">→</span>
       <div class="step">
         <div class="step-number">2</div>
-        <span class="step-text">AI Extracts Elements</span>
+        <span class="step-text">AI Analyzes & Matches</span>
       </div>
       <span class="step-arrow">→</span>
       <div class="step">
         <div class="step-number">3</div>
-        <span class="step-text">Edit & Approve</span>
+        <span class="step-text">Review & Edit</span>
       </div>
       <span class="step-arrow">→</span>
       <div class="step">
         <div class="step-number">4</div>
-        <span class="step-text">Get All Sizes</span>
+        <span class="step-text">Get All 11 Sizes</span>
       </div>
     </div>
   </section>
@@ -403,10 +519,23 @@
     <!-- Upload Section -->
     <section class="upload-section" id="uploadSection">
       <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-        <input type="file" id="fileInput" accept="image/*" onchange="handleUpload(this.files[0])">
+        <input type="file" id="fileInput" accept="image/*" multiple onchange="handleMultiUpload(this.files)">
         <div class="upload-icon">🖼️</div>
-        <div class="upload-text">Drop your ad creative here</div>
-        <div class="upload-hint">or click to browse • Any size accepted (JPG, PNG, GIF)</div>
+        <div class="upload-text">Drop your ad creatives here</div>
+        <div class="upload-hint">Upload one or more sizes • AI generates the rest • JPG, PNG, GIF</div>
+      </div>
+
+      <!-- Size Coverage Tracker -->
+      <div class="size-tracker" id="sizeTracker" style="display: none;">
+        <h3 style="font-size: 16px; margin-bottom: 16px;">📊 Size Coverage</h3>
+        <div class="size-grid" id="sizeGrid"></div>
+        <div style="margin-top: 16px; display: flex; gap: 16px; align-items: center;">
+          <div><span style="display: inline-block; width: 12px; height: 12px; background: #22c55e; border-radius: 2px; margin-right: 6px;"></span> Uploaded</div>
+          <div><span style="display: inline-block; width: 12px; height: 12px; background: #4F46E5; border-radius: 2px; margin-right: 6px;"></span> AI Will Generate</div>
+        </div>
+        <button class="continue-btn" id="continueBtn" onclick="continueToAnalysis()" style="margin-top: 20px;">
+          Continue to Analysis →
+        </button>
       </div>
     </section>
 
@@ -527,6 +656,24 @@
     let croppedImages = null;
     let currentView = 'dynamic';
 
+    // Track uploaded files by size
+    let uploadedCreatives = {};
+    let primaryCreative = null; // The one we'll use for AI analysis
+
+    const IAB_SIZES = {
+      '728x90': { name: 'Leaderboard', width: 728, height: 90 },
+      '970x90': { name: 'Large Leaderboard', width: 970, height: 90 },
+      '970x250': { name: 'Billboard', width: 970, height: 250 },
+      '300x250': { name: 'Medium Rectangle', width: 300, height: 250 },
+      '336x280': { name: 'Large Rectangle', width: 336, height: 280 },
+      '160x600': { name: 'Skyscraper', width: 160, height: 600 },
+      '300x600': { name: 'Half Page', width: 300, height: 600 },
+      '320x50': { name: 'Mobile Banner', width: 320, height: 50 },
+      '320x100': { name: 'Large Mobile', width: 320, height: 100 },
+      '300x50': { name: 'Small Mobile', width: 300, height: 50 },
+      '320x480': { name: 'Interstitial', width: 320, height: 480 },
+    };
+
     const analyzer = new BuzzerAds.AICreativeAnalyzer({
       onProgress: (progress) => {
         document.getElementById('progressFill').style.width = progress.percent + '%';
@@ -549,13 +696,115 @@
       e.preventDefault();
       uploadZone.classList.remove('dragover');
       if (e.dataTransfer.files.length) {
-        handleUpload(e.dataTransfer.files[0]);
+        handleMultiUpload(e.dataTransfer.files);
       }
     });
 
-    async function handleUpload(file) {
-      if (!file || !file.type.startsWith('image/')) {
-        alert('Please upload an image file');
+    // Handle multiple file uploads
+    async function handleMultiUpload(files) {
+      if (!files || files.length === 0) return;
+
+      const fileArray = Array.from(files).filter(f => f.type.startsWith('image/'));
+      if (fileArray.length === 0) {
+        alert('Please upload image files');
+        return;
+      }
+
+      // Process each file
+      for (const file of fileArray) {
+        await processUploadedFile(file);
+      }
+
+      // Show size tracker
+      updateSizeTracker();
+    }
+
+    async function processUploadedFile(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const sizeKey = `${img.width}x${img.height}`;
+            const matchedSize = findMatchingSize(img.width, img.height);
+
+            const creativeData = {
+              file,
+              dataUrl: e.target.result,
+              width: img.width,
+              height: img.height,
+              sizeKey,
+              matchedSize,
+              filename: file.name,
+            };
+
+            if (matchedSize) {
+              uploadedCreatives[matchedSize] = creativeData;
+            }
+
+            // Use largest uploaded image as primary for analysis
+            if (!primaryCreative || (img.width * img.height > primaryCreative.width * primaryCreative.height)) {
+              primaryCreative = creativeData;
+            }
+
+            resolve(creativeData);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function findMatchingSize(width, height) {
+      // Exact match
+      const exact = `${width}x${height}`;
+      if (IAB_SIZES[exact]) return exact;
+
+      // Close match (within 5% tolerance)
+      for (const [key, size] of Object.entries(IAB_SIZES)) {
+        const widthDiff = Math.abs(width - size.width) / size.width;
+        const heightDiff = Math.abs(height - size.height) / size.height;
+        if (widthDiff < 0.05 && heightDiff < 0.05) {
+          return key;
+        }
+      }
+
+      return null;
+    }
+
+    function updateSizeTracker() {
+      const tracker = document.getElementById('sizeTracker');
+      const grid = document.getElementById('sizeGrid');
+      tracker.style.display = 'block';
+
+      const uploadedCount = Object.keys(uploadedCreatives).length;
+      const pendingCount = Object.keys(IAB_SIZES).length - uploadedCount;
+
+      grid.innerHTML = Object.entries(IAB_SIZES).map(([key, size]) => {
+        const uploaded = uploadedCreatives[key];
+        const statusClass = uploaded ? 'uploaded' : 'pending';
+        const statusText = uploaded ? 'Uploaded' : 'AI Generate';
+
+        return `
+          <div class="size-item ${statusClass}">
+            ${uploaded ? `<img src="${uploaded.dataUrl}" alt="${key}">` : ''}
+            <div class="size-dim">${key}</div>
+            <div class="size-name">${size.name}</div>
+            <div class="size-status">${statusText}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Update button text
+      document.getElementById('continueBtn').innerHTML =
+        uploadedCount > 0
+          ? `Continue → Use ${uploadedCount} uploaded, AI generates ${pendingCount}`
+          : `Continue → AI generates all ${pendingCount} sizes`;
+    }
+
+    async function continueToAnalysis() {
+      if (!primaryCreative) {
+        alert('Please upload at least one image');
         return;
       }
 
@@ -564,8 +813,9 @@
       document.getElementById('progressSection').style.display = 'block';
 
       try {
-        // Analyze
-        analysisResult = await analyzer.analyze(file);
+        // Analyze primary creative
+        analysisResult = await analyzer.analyze(primaryCreative.file);
+        analysisResult.uploadedCreatives = uploadedCreatives;
 
         // Show analysis results
         showAnalysisResults();
@@ -576,6 +826,11 @@
         document.getElementById('uploadSection').style.display = 'block';
         document.getElementById('progressSection').style.display = 'none';
       }
+    }
+
+    // Legacy single upload (still works)
+    async function handleUpload(file) {
+      handleMultiUpload([file]);
     }
 
     function showAnalysisResults() {
@@ -651,12 +906,18 @@
 
       // Show crop previews
       const cropGrid = document.getElementById('cropGrid');
-      cropGrid.innerHTML = Object.entries(croppedImages).map(([size, data]) => `
-        <div class="crop-card">
-          <img src="${data.dataUrl}" alt="${size}">
-          <div class="crop-label">${data.name}<br>${size}</div>
-        </div>
-      `).join('');
+      cropGrid.innerHTML = Object.entries(croppedImages).map(([size, data]) => {
+        const wasUploaded = uploadedCreatives[size];
+        return `
+          <div class="crop-card">
+            <img src="${wasUploaded ? wasUploaded.dataUrl : data.dataUrl}" alt="${size}">
+            <div class="crop-label">
+              ${data.name}<br>${size}
+              ${wasUploaded ? '<br><span style="color: #22c55e; font-size: 10px;">✓ Uploaded</span>' : '<br><span style="color: #4F46E5; font-size: 10px;">AI Generated</span>'}
+            </div>
+          </div>
+        `;
+      }).join('');
 
       // Show main preview
       updatePreviewGrid();
