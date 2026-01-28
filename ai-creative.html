@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Creative Studio - Buzzer Network</title>
+  <script src="js/buzzer-creative-builder.js"></script>
+  <script src="js/buzzer-ai-creative.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 24px; font-weight: 700; color: #4F46E5; text-decoration: none; }
+    nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      margin-left: 24px;
+    }
+    nav a:hover { color: #fff; }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: rgba(255,255,255,0.6); font-size: 18px; max-width: 600px; margin: 0 auto; }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .step-text { color: rgba(255,255,255,0.8); }
+    .step-arrow { color: rgba(255,255,255,0.3); font-size: 24px; }
+
+    /* Upload Zone */
+    .upload-section {
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+    .upload-zone {
+      border: 3px dashed rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 60px 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: rgba(255,255,255,0.02);
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: #4F46E5;
+      background: rgba(79, 70, 229, 0.1);
+    }
+    .upload-zone input { display: none; }
+    .upload-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+    .upload-text { font-size: 20px; margin-bottom: 8px; }
+    .upload-hint { color: rgba(255,255,255,0.5); font-size: 14px; }
+
+    /* Progress */
+    .progress-section {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+    .progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .progress-text { color: rgba(255,255,255,0.7); }
+
+    /* Analysis Results */
+    .analysis-section {
+      display: none;
+      margin-bottom: 60px;
+    }
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 40px;
+    }
+
+    .original-preview {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .original-preview img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .original-info {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .extracted-data {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-palette {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .color-swatch {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .color-swatch:hover { transform: scale(1.1); }
+    .color-swatch.selected { border-color: #4F46E5; }
+
+    .edit-form {
+      display: grid;
+      gap: 16px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      font-size: 14px;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #4F46E5;
+    }
+
+    .color-picker-row {
+      display: flex;
+      gap: 16px;
+    }
+    .color-picker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .color-picker input[type="color"] {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .color-picker span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .regenerate-btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin-top: 16px;
+    }
+    .regenerate-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Preview Grid */
+    .preview-section {
+      display: none;
+    }
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .preview-title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .view-toggle {
+      display: flex;
+      gap: 8px;
+    }
+    .view-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .view-btn.active {
+      background: #4F46E5;
+      border-color: #4F46E5;
+      color: #fff;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+    .preview-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .preview-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .preview-size {
+      font-weight: 600;
+    }
+    .preview-name {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .preview-container {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+      min-height: 100px;
+    }
+
+    .download-all-btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Smart Crop Preview */
+    .crop-preview-section {
+      display: none;
+      margin-bottom: 40px;
+    }
+    .crop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .crop-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+    .crop-card img {
+      max-width: 100%;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .crop-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    @media (max-width: 900px) {
+      .analysis-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .steps { gap: 20px; }
+      .step-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">Buzzer Network</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/top-formats.html">Display</a>
+        <a href="/creative-builder.html">Builder</a>
+        <a href="/ai-creative.html">AI Studio</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>AI Creative Studio</h1>
+    <p>Upload any ad creative. Our AI extracts colors, text, and branding to regenerate perfectly-sized ads for all 11 IAB formats.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <span class="step-text">Upload Any Size</span>
+      </div>
+      <span class="step-arrow">→</span>
+      <div class="step">
+        <div class="step-number">2</div>
+        <span class="step-text">AI Extracts Elements</span>
+      </div>
+      <span class="step-arrow">→</span>
+      <div class="step">
+        <div class="step-number">3</div>
+        <span class="step-text">Edit & Approve</span>
+      </div>
+      <span class="step-arrow">→</span>
+      <div class="step">
+        <div class="step-number">4</div>
+        <span class="step-text">Get All Sizes</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Upload Section -->
+    <section class="upload-section" id="uploadSection">
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept="image/*" onchange="handleUpload(this.files[0])">
+        <div class="upload-icon">🖼️</div>
+        <div class="upload-text">Drop your ad creative here</div>
+        <div class="upload-hint">or click to browse • Any size accepted (JPG, PNG, GIF)</div>
+      </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="progress-section" id="progressSection">
+      <div class="upload-icon">🤖</div>
+      <h3 style="margin-bottom: 8px;">Analyzing your creative...</h3>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <p class="progress-text" id="progressText">Starting analysis...</p>
+    </section>
+
+    <!-- Analysis Results -->
+    <section class="analysis-section" id="analysisSection">
+      <div class="analysis-grid">
+        <!-- Original Preview -->
+        <div class="original-preview">
+          <h3 class="section-title"><span>📷</span> Original Creative</h3>
+          <img id="originalImage" src="" alt="Original">
+          <div class="original-info" id="originalInfo"></div>
+
+          <div style="margin-top: 20px;">
+            <h4 style="font-size: 14px; margin-bottom: 12px;">Extracted Color Palette</h4>
+            <div class="color-palette" id="colorPalette"></div>
+          </div>
+        </div>
+
+        <!-- Edit Form -->
+        <div class="extracted-data">
+          <h3 class="section-title"><span>✏️</span> Edit & Customize</h3>
+
+          <div class="edit-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Brand Name *</label>
+                <input type="text" id="editBrand" placeholder="Your Company">
+              </div>
+              <div class="form-group">
+                <label>CTA Button</label>
+                <input type="text" id="editCta" placeholder="Learn More">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Headline *</label>
+              <input type="text" id="editHeadline" placeholder="Your compelling headline">
+            </div>
+
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="editDescription" rows="2" placeholder="Short description"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Click URL *</label>
+              <input type="url" id="editClickUrl" placeholder="https://yoursite.com/landing">
+            </div>
+
+            <div class="form-group">
+              <label>Colors (extracted from your image)</label>
+              <div class="color-picker-row">
+                <div class="color-picker">
+                  <input type="color" id="editBgColor" value="#ffffff">
+                  <span>Background</span>
+                </div>
+                <div class="color-picker">
+                  <input type="color" id="editTextColor" value="#000000">
+                  <span>Text</span>
+                </div>
+                <div class="color-picker">
+                  <input type="color" id="editAccentColor" value="#4F46E5">
+                  <span>Button</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="regenerate-btn" onclick="regenerateAll()">
+              ✨ Generate All 11 Sizes
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Smart Crop Preview -->
+    <section class="crop-preview-section" id="cropSection">
+      <h3 class="section-title" style="margin-bottom: 20px;"><span>✂️</span> Smart Crop Preview (Original Image Resized)</h3>
+      <div class="crop-grid" id="cropGrid"></div>
+    </section>
+
+    <!-- Preview Section -->
+    <section class="preview-section" id="previewSection">
+      <div class="preview-header">
+        <div class="preview-title">Generated Creatives</div>
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('dynamic')">Dynamic (HTML5)</button>
+          <button class="view-btn" onclick="setView('cropped')">Smart Crop</button>
+        </div>
+      </div>
+
+      <div class="preview-grid" id="previewGrid"></div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <button class="download-all-btn" onclick="downloadAll()">
+          📥 Download All Sizes
+        </button>
+        <p style="margin-top: 12px; color: rgba(255,255,255,0.5); font-size: 13px;">
+          Downloads as ZIP with all 11 sizes ready to use
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let analysisResult = null;
+    let regeneratedResult = null;
+    let croppedImages = null;
+    let currentView = 'dynamic';
+
+    const analyzer = new BuzzerAds.AICreativeAnalyzer({
+      onProgress: (progress) => {
+        document.getElementById('progressFill').style.width = progress.percent + '%';
+        document.getElementById('progressText').textContent = progress.message;
+      }
+    });
+
+    const regenerator = new BuzzerAds.AICreativeRegenerator();
+
+    // Drag and drop
+    const uploadZone = document.getElementById('uploadZone');
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('dragover');
+    });
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        handleUpload(e.dataTransfer.files[0]);
+      }
+    });
+
+    async function handleUpload(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        alert('Please upload an image file');
+        return;
+      }
+
+      // Show progress
+      document.getElementById('uploadSection').style.display = 'none';
+      document.getElementById('progressSection').style.display = 'block';
+
+      try {
+        // Analyze
+        analysisResult = await analyzer.analyze(file);
+
+        // Show analysis results
+        showAnalysisResults();
+
+      } catch (error) {
+        console.error('Analysis error:', error);
+        alert('Error analyzing image: ' + error.message);
+        document.getElementById('uploadSection').style.display = 'block';
+        document.getElementById('progressSection').style.display = 'none';
+      }
+    }
+
+    function showAnalysisResults() {
+      document.getElementById('progressSection').style.display = 'none';
+      document.getElementById('analysisSection').style.display = 'block';
+
+      // Show original image
+      document.getElementById('originalImage').src = analysisResult.original.dataUrl;
+      document.getElementById('originalInfo').innerHTML = `
+        <strong>Size:</strong> ${analysisResult.original.width} × ${analysisResult.original.height}px<br>
+        <strong>Aspect Ratio:</strong> ${analysisResult.original.aspectRatio.toFixed(2)}
+      `;
+
+      // Show color palette
+      const paletteEl = document.getElementById('colorPalette');
+      paletteEl.innerHTML = analysisResult.extracted.colors.map((c, i) => `
+        <div class="color-swatch ${i === 0 ? 'selected' : ''}"
+             style="background: ${c.hex}"
+             title="${c.hex}"
+             onclick="selectColor('${c.hex}')"></div>
+      `).join('');
+
+      // Fill form with suggestions
+      document.getElementById('editBrand').value = analysisResult.suggestions.brand;
+      document.getElementById('editHeadline').value = analysisResult.suggestions.headline;
+      document.getElementById('editDescription').value = analysisResult.suggestions.description;
+      document.getElementById('editCta').value = analysisResult.suggestions.cta;
+
+      // Set colors
+      const scheme = analysisResult.extracted.colorScheme;
+      document.getElementById('editBgColor').value = scheme.backgroundColor;
+      document.getElementById('editTextColor').value = scheme.textColor;
+      document.getElementById('editAccentColor').value = scheme.accentColor;
+    }
+
+    function selectColor(hex) {
+      // Could be used to apply color to a field
+      navigator.clipboard.writeText(hex);
+    }
+
+    function regenerateAll() {
+      const userInputs = {
+        brand: document.getElementById('editBrand').value,
+        headline: document.getElementById('editHeadline').value,
+        description: document.getElementById('editDescription').value,
+        cta: document.getElementById('editCta').value,
+        clickUrl: document.getElementById('editClickUrl').value || '#',
+        backgroundColor: document.getElementById('editBgColor').value,
+        textColor: document.getElementById('editTextColor').value,
+        accentColor: document.getElementById('editAccentColor').value,
+      };
+
+      // Validate
+      if (!userInputs.headline) {
+        alert('Please enter a headline');
+        return;
+      }
+
+      // Regenerate dynamic creatives
+      regeneratedResult = regenerator.regenerate(analysisResult, userInputs);
+
+      // Generate smart crops
+      const img = document.getElementById('originalImage');
+      croppedImages = BuzzerAds.SmartCropper.generateAllSizes(img);
+
+      // Show preview
+      showPreview();
+    }
+
+    function showPreview() {
+      document.getElementById('previewSection').style.display = 'block';
+      document.getElementById('cropSection').style.display = 'block';
+
+      // Show crop previews
+      const cropGrid = document.getElementById('cropGrid');
+      cropGrid.innerHTML = Object.entries(croppedImages).map(([size, data]) => `
+        <div class="crop-card">
+          <img src="${data.dataUrl}" alt="${size}">
+          <div class="crop-label">${data.name}<br>${size}</div>
+        </div>
+      `).join('');
+
+      // Show main preview
+      updatePreviewGrid();
+
+      // Scroll to preview
+      document.getElementById('cropSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function setView(view) {
+      currentView = view;
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(view));
+      });
+      updatePreviewGrid();
+    }
+
+    function updatePreviewGrid() {
+      const grid = document.getElementById('previewGrid');
+
+      if (currentView === 'dynamic') {
+        grid.innerHTML = Object.entries(regeneratedResult.sizes).map(([size, data]) => `
+          <div class="preview-card">
+            <div class="preview-card-header">
+              <span class="preview-size">${size}</span>
+              <span class="preview-name">${data.size.name}</span>
+            </div>
+            <div class="preview-container">
+              ${data.html}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        grid.innerHTML = Object.entries(croppedImages).map(([size, data]) => `
+          <div class="preview-card">
+            <div class="preview-card-header">
+              <span class="preview-size">${size}</span>
+              <span class="preview-name">${data.name}</span>
+            </div>
+            <div class="preview-container">
+              <img src="${data.dataUrl}" alt="${size}" style="max-width: 100%;">
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function downloadAll() {
+      // In production, this would create a ZIP file
+      // For demo, we'll download the first size as example
+      alert('In production, this downloads a ZIP with all 11 sizes.\n\nFor demo: check browser console for generated HTML.');
+
+      console.log('Generated Creatives:', regeneratedResult);
+      console.log('Smart Cropped Images:', croppedImages);
+    }
+  </script>
+</body>
+</html>
